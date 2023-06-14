@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+    <title>Attention check</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div class="row justify-content-center text-center">
+			<div class="col-md-auto" style="margin-top:50px">
+				<h3>Attention check</h3>
+
+				<div class="survey" id="app" v-cloak>
+					<form id="survey-form" @submit.prevent="formSubmit" v-if="attentionItems">
+                        <div v-for="attentionItem in attentionItems" style="margin-top: 20px;width:650px;">
+                            {% if split_id == '1' %}
+                            <div v-if="attentionItem.condition1 == true">
+                                <p><b>[[ attentionItem.question ]]</b>
+                                    <span v-if="attentionItem.required" class="required-symbol">*</span>
+                                </p>
+                                <div v-if="attentionItem.options === null" class="form-group pb-4">
+                                    <textarea class="form-control" :name="attentionItem.id" :required="attentionItem.required"
+                                        @change="inputChange" value="">
+                                    </textarea>
+                                </div>
+                                <div v-else class="form-group pb-4">
+                                    <div v-for="option in attentionItem.options" class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" :id="attentionItem.id + '-' + option" :name="attentionItem.id" :value="option"
+                                            :required="attentionItem.required" @click="inputChange">
+                                        <label class="form-check-label" :for="attentionItem.id + '-' + option">[[ option ]]</label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if split_id == '2' %}
+                            <div v-if="attentionItem.condition2 == true">
+                                <p><b>[[ attentionItem.question ]]</b>
+                                    <span v-if="attentionItem.required" class="required-symbol">*</span>
+                                </p>
+                                <div v-if="attentionItem.options === null" class="form-group pb-4">
+                                    <textarea class="form-control" :name="attentionItem.id" :required="attentionItem.required"
+                                        @change="inputChange" value="">
+                                    </textarea>
+                                </div>
+                                <div v-else class="form-group pb-4">
+                                    <div v-for="option in attentionItem.options" class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" :id="attentionItem.id + '-' + option" :name="attentionItem.id" :value="option"
+                                            :required="attentionItem.required" @click="inputChange">
+                                        <label class="form-check-label" :for="attentionItem.id + '-' + option">[[ option ]]</label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if split_id == '3' %}
+                            <div v-if="attentionItem.condition3 == true">
+                                <p><b>[[ attentionItem.question ]]</b>
+                                    <span v-if="attentionItem.required" class="required-symbol">*</span>
+                                </p>
+                                <div v-if="attentionItem.options === null" class="form-group pb-4">
+                                    <textarea class="form-control" :name="attentionItem.id" :required="attentionItem.required"
+                                        @change="inputChange" value="">
+                                    </textarea>
+                                </div>
+                                <div v-else class="form-group pb-4">
+                                    <div v-for="option in attentionItem.options" class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" :id="attentionItem.id + '-' + option" :name="attentionItem.id" :value="option"
+                                            :required="attentionItem.required" @click="inputChange">
+                                        <label class="form-check-label" :for="attentionItem.id + '-' + option">[[ option ]]</label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Next</button>
+                    </form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="{{ url_for('static', filename='common.js') }}"></script>
+    <script src="{{ url_for('static', filename='attention.js') }}"></script>
+
+</body>
+
+</html>

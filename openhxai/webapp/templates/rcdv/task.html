@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Prediction Phase</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div id="app" v-cloak style="width: 90%">
+                <!-- task instructions -->
+                <div class="jumbotron text-center gray-resize attention-box">
+                    Determine if the profile below will recidivate or not.
+                </div>
+                <!-- end of task instructions -->
+
+
+                <!-- feature explanations -->
+                <div class="row">
+                    <div class="task-data table-style" id="task-data" v-if="taskItem" style="height:200px;margin-top:30px;">
+                        <div style="height: auto; overflow-y: auto;border: 1px solid black; padding:10px">
+                            <b>Features explanations</b> <br><br>
+                            
+                            <p>Recividism - convincted criminal likely to reoffend</p>
+
+                            <p>Release was supervised - supervision imposed by the court after release from a jail or prison sentence</p>
+                            
+                            <p>Conviction was for a felony - misdemeanor is less serious than felony and carries lighter penalties</p>
+                            
+                            <p>Conviction was against a person - crimes against a person (murder, rape, and assault)  are those whose victims are individuals</p>
+                            
+                            <p>Number of prior convictions - the object of crimes against property (robbery, bribery, and burglary) is to obtain money, property, or some other benefit (missing value is filled by mean 1.43)</p>
+                            
+                            <p>Number of years of school - missing value is filled by mean 9.62</p>
+                            
+                            <p>Race is White - a very small number of ethnicities other than White and Black are also counted as White in this dataset for historical reasons</p>
+                            
+                            <p>Participated in NC's work release program - work release program provides selected inmates the opportunity for employment in the community during imprisonment</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end of feature explanations -->
+
+
+                <!-- split id 1& 2: prediction condition -->
+                {% if split_id == '1' or split_id == '2' %}
+                <div class="row" style="margin-top: 30px">
+                    <!-- table with features and scores -->
+                    <div class="task-data table-style" id="task-data" v-if="taskItem" style="height:550px">
+                        <div style="height: auto; overflow-y: auto;border: 1px solid black;">
+                            <!-- counter -->
+                            <b>Profile [[ displayProgress() ]]/[[ taskItems.length ]]:</b>
+
+                            <!-- prediction -->
+                            {% if split_id == '2' %}
+                            <div class="center" style="margin-top: 30px">
+                                The AI predicts that this profile <span :style="{ backgroundColor: parse_feature('prediction', taskItem.prediction) == 'will recidivate' ? '#ff66b3' : '#66b5ff' }">
+                                    [[ parse_feature('prediction', taskItem.prediction) ]]
+                                </span>.
+                            </div>
+                            {% endif %}
+
+                            <!-- start of the table -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Feature</th>
+                                        <th scope="col">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(featureOrder, featureName) in taskItems.order">
+                                        <td scope="row">[[ parse_feature_onehot(featureName, taskItem.features[featureName]) ]]</td>
+
+                                        <td scope="row">
+                                            <span>[[ parse_feature(featureName, taskItem.features[featureName]) ]]</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <!-- end of prediction condition -->
+
+
+
+                <!-- split id 3: explanations + prediction condition -->
+                {% if split_id == '3' %}
+                <!-- table & chart -->
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-4">
+                        <!-- table with features and scores -->
+                        <div class="task-data table-style" id="task-data" v-if="taskItem" style="height:550px">
+                            <div style="height: auto; overflow-y: auto;border: 1px solid black;">
+                                <!-- counter -->
+                                <b>Profile [[ displayProgress() ]]/[[ taskItems.length ]]:</b>
+
+                                <!-- prediction -->
+                                <div class="center" style="margin-top: 30px">
+                                    The AI predicts that this profile <span :style="{ backgroundColor: parse_feature('prediction', taskItem.prediction) == 'will recidivate' ? '#ff66b3' : '#66b5ff' }">
+                                        [[ parse_feature('prediction', taskItem.prediction) ]]
+                                    </span>.
+                                </div>
+
+                                <!-- start of the table -->
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Feature</th>
+                                            <th scope="col">Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(featureOrder, featureName) in taskItems.order">
+                                            <td scope="row">[[ parse_feature_onehot(featureName, taskItem.features[featureName]) ]]</td>
+    
+                                            <td scope="row">
+                                                <span>[[ parse_feature(featureName, taskItem.features[featureName]) ]]</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- chart -->
+                    <div class="col-8">
+                        <div class="table-style" style="height: 550px;">
+                            <p style="text-align:left;" class="hide" id="chart_instructions_gray">
+                                The bar chart below explains how the model uses the profile features to make the prediction. 
+                                The length of the bars indicates the relative importance of each feature. 
+                                Note that the features are ordered by their importance in this bar chart, which is different from the order in the table on the left.
+                            </p>
+
+                            <p style="text-align:left;" class="hide" id="chart_instructions_colors">
+                                The bar chart below explains how the model uses the profile features to make the prediction. 
+                                The length of the bars indicates the relative importance of each feature. 
+                                The color of the bars indicate that, if this feature is "yes" or has a larger value, there is a higher chance for the model to make the prediction in the corresponding color. 
+                                Note that the features are ordered by their importance in this bar chart, which is different from the order in the table on the left.
+                            </p>
+
+                            <div style="width: 100%; height: auto; overflow: scroll; border: 1px solid black;">
+                                <canvas class="task-data" id="chart" style="width: 10000px; height: 550px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end of table & chart -->
+                {% endif %}
+                <!-- end of explanations + prediction condition -->
+
+
+                <!-- buttons -->
+                <div class="col-12">
+                    <div class="text-center" style="padding-bottom: 50px;">
+                        <button class="btn btn-lg label-button positive-btn" id="label-red-button" value="will_recidivate"
+                            @click="labelSubmit">Will recidivate</button>
+
+                        <div class="divider"></div>
+
+                        <button class="btn btn-lg label-button negative-btn" id="label-blue-button" value="will_not_recidivate"
+                            @click="labelSubmit">Will not recidivate</button>
+                    </div>
+                </div><!-- end of buttons -->
+
+                
+            </div><!-- end of div width:70% -->
+        </div><!-- end of row -->
+    </div><!-- end of container -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="{{ url_for('static', filename='common.js') }}"></script>
+
+    <script>
+        function init() {
+            if (!exists_session("task-state")) {
+                set_session("task-state", {
+                    "task-start-time": Date.now(),
+                    "task-progress": 0,
+                    "labels": {}
+                });
+            }
+            const task_state = get_session("task-state");
+            const task_progress = task_state["task-progress"];
+            Vue.createApp({
+                delimiters: ['[[', ']]'],
+                data() {
+                    return {
+                        taskItem: null,
+                        taskItems: null,
+                        taskProgress: task_progress,
+                        codebook: null,
+                    }
+                },
+                methods: {
+                    labelSubmit(e) {
+                        console.log('start of label submit')
+                        const task_state = get_session("task-state");
+                        const current_item = this.taskItems[this.taskProgress]
+                        task_state["labels"][this.taskProgress] = {
+                            "label": e.target.value,
+                            "actual_label": this.taskItem['label'],
+                            "prediction": this.taskItem['prediction'],
+                            "instance": this.taskItem['instance-idx'],
+                            "label-time": Date.now(),
+                        };
+                        this.taskProgress += 1;
+                        task_state["task-progress"] = this.taskProgress;
+                        set_session("task-state", task_state);
+                        $.ajax({
+                            type: "POST",
+                            url: "/post",
+                            data: JSON.stringify({
+                                "event": "task-update",
+                                "task-state": task_state,
+                            }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.redirect) {
+                                    window.location.replace(data.redirect);
+                                }
+                            },
+                            error: function (errMsg) {
+                                console.log(data);
+                                console.log("POST ERROR", errMsg);
+                            }
+                        });
+                        if (this.taskProgress < this.taskItems.length) {
+                            this.taskItem = this.taskItems[this.taskProgress]
+                        }
+                        window.location.reload()
+                    },
+                    displayProgress() {
+                        if (this.taskItems === null) {
+                            return 0;
+                        }
+                        return Math.min(this.taskProgress + 1, this.taskItems.length);
+                    },
+                    // TODO: move this mapping into the backend
+                    parse_feature_onehot: function (feature, value) {
+                        return capitalizeFirstLetter(this.codebook[feature])
+                    },
+                    parse_feature: function (feature, value) {
+                        if (feature == "prediction") return value == 1 ? "will recidivate" : "will not recidivate"
+
+                        const features_yes_no = ['super', 'alchy', 'junky', 'felon', 'propty', 'person', 'male', 'white', 'married', 'workrel'];
+                        if (features_yes_no.includes(feature)) {
+                            return value == 1 ? "Yes" : "No"
+                        }
+
+                        if (feature == "age") {
+                            var ret = parseInt(value) / 12
+                            return parseFloat(ret.toFixed(1))
+                        }
+
+                        if (feature == "priors" || feature == "school") {
+                            var ret = parseFloat(value)
+                            return parseFloat(ret.toFixed(2))
+                        }
+
+                        return value
+                    }
+                },
+                mounted() {
+                    // Make AJAX requests
+                    const taskDataRequest = $.get("/get-task-data");
+                    const codebookRequest = $.get("/get-codebook");
+
+                    // Handle task data request
+                    taskDataRequest.done(data => {
+                        const feature_order = {'super': 0, 'alchy': 1, 'junky': 2, 'felon': 3, 'propty': 4, 'person': 5, 'priors': 6, 'school': 7, 'rule': 8, 'tservd': 9, 'follow': 10, 'age': 11, 'male': 12, 'white': 13, 'married': 14, 'workrel': 15};
+                        this.taskItems = data;
+                        this.taskItem = this.taskItems[this.taskProgress];
+                        this.taskItems['order'] = feature_order
+
+                        // Wait for codebook request to complete
+                        codebookRequest.done(codebookData => {
+                            this.codebook = codebookData;
+                            displayChart(this.taskItem, this.codebook); // Pass codebook as an argument
+                        });
+                    });
+                }
+            }).mount('#app');
+
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
+            function parseFeature(feature, value) {
+                if (feature == "prediction") return value == 1 ? "will recidivate" : "will not recidivate"
+
+                const features_yes_no = ['super', 'alchy', 'junky', 'felon', 'propty', 'person', 'male', 'white', 'married', 'workrel'];
+                if (features_yes_no.includes(feature)) {
+                    return value == 1 ? "Yes" : "No"
+                }
+
+                if (feature == "age") {
+                    var ret = parseInt(value) / 12
+                    return parseFloat(ret.toFixed(1))
+                }
+
+                if (feature == "priors" || feature == "school") {
+                    var ret = parseFloat(value)
+                    return parseFloat(ret.toFixed(2))
+                }
+
+                return value
+            }
+
+            function displayChart(data, codebook) {
+                // sort the object by their absolute values in desc order
+                const sortedObject = Object.fromEntries(
+                    Object.entries(data.attributions)
+                        .sort(([, a], [, b]) => Math.abs(b) - Math.abs(a))
+                );
+
+                // get top 5 features only
+                // const top_k = 5;
+                // const slicedArray = Object.entries(sortedObject).slice(0, top_k);
+                // const slicedObject = Object.fromEntries(slicedArray);
+
+                // get features and values respectively and assign colors
+                const features = Object.keys(sortedObject);
+                const full_feature_names = features.map(f => codebook[f] + " (value: " + parseFeature(f, data.features[f]) + ")");
+                const feature_scores = Object.values(sortedObject);
+                const min_score = Math.min(...feature_scores);
+                let background_colors = feature_scores.map(x => x < 0 ? "#dd99bb" : "#99bbdd");
+                if (min_score > 0) {
+                    background_colors = feature_scores.map(x => "#D3D3D3");
+                    var el = document.querySelector('#chart_instructions_gray');
+                } else {
+                    var el = document.querySelector('#chart_instructions_colors');
+                }
+                el.classList.remove("hide");
+                
+
+                // const num_data_points = features.length;
+                // const bar_thickness = 25;
+                // const height = num_data_points * bar_thickness + 500;
+
+                const ctx = document.getElementById('chart');
+                // ctx.height = 1750;
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                    labels: full_feature_names,
+                    datasets: [{
+                        label: 'Feature score',
+                        data: feature_scores,
+                        backgroundColor: background_colors,
+                        borderWidth: 1,
+                    }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        barThickness: 25,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    },
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            init();
+        });
+
+
+
+       
+      </script>
+</body>
+
+</html>
