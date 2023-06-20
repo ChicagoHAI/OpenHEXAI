@@ -1,0 +1,25 @@
+experiment_id: student-debug
+app_config:
+  secret_file: config/secrets/app-secret.txt
+  codebook: config/student/codebook.csv
+  templates:
+    landing: landing.html
+    consent: student/consent.html
+    instructions: student/instructions.html
+    attention: student/attention.html
+    task: student/task.html
+    survey: survey.html
+    disqualify: disqualify.html
+    end: end.html
+  attention_data: config/student/student-attention.json
+  survey_data: config/student/student-survey.json
+db_config:
+  overwrite_db: true
+  password_file: config/secrets/db-password.txt
+  redis_config:
+    port: 6666
+dataset: student
+explainer_config:
+  model_type: ann
+  model_pretrained: true
+  explanation_method: lime

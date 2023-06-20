@@ -1,0 +1,21 @@
+experiment_id: compas-debug
+app_config:
+  secret_file: config/secrets/app-secret.txt
+  templates:
+    landing: landing.html
+    consent: compas/consent.html
+    instructions: compas/instructions.html
+    task: compas/task.html
+    survey: survey.html
+    end: end.html
+  survey_data: config/compas/compas-survey.json
+db_config:
+  overwrite_db: true
+  password_file: config/secrets/db-password.txt
+  redis_config:
+    port: 6666
+dataset: compas
+explainer_config:
+  model_type: ann
+  model_pretrained: true
+  explanation_method: lime

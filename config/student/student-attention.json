@@ -1,0 +1,41 @@
+[
+    {
+        "id": "1",
+        "type": "multiple-choice",
+        "question": "In this experiment, the task is to predict if a student's profile will be accepted or rejected.",
+        "options": [
+            "True",
+            "False"
+        ],
+        "required": true, 
+        "condition1": true,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "2",
+        "type": "multiple-choice",
+        "question": "You will be given the model's prediction as AI assistance.",
+        "options": [
+            "True",
+            "False"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": false
+    },
+    {
+        "id": "3",
+        "type": "multiple-choice",
+        "question": "You will be given the model's prediction and explanations as AI assistance.",
+        "options": [
+            "True",
+            "False"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": false, 
+        "condition3": true
+    }
+]

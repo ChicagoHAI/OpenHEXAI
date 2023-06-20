@@ -1,0 +1,25 @@
+experiment_id: rcdv-ann-lime
+app_config:
+  secret_file: config/secrets/app-secret.txt
+  codebook: config/rcdv/codebook.csv
+  templates:
+    landing: landing.html
+    consent: rcdv/consent.html
+    instructions: rcdv/instructions.html
+    attention: rcdv/attention.html
+    task: rcdv/task.html
+    survey: survey.html
+    disqualify: disqualify.html
+    end: end.html
+  attention_data: config/rcdv/rcdv-attention.json
+  survey_data: config/rcdv/rcdv-survey.json
+db_config:
+  overwrite_db: true
+  password_file: config/secrets/db-password.txt
+  redis_config:
+    port: 6666
+dataset: rcdv
+explainer_config:
+  model_type: ann
+  model_pretrained: true
+  explanation_method: lime

@@ -1,0 +1,10 @@
+# Add your own dependencies to this file.
+pandas==1.5.3
+omegaconf==2.3.0
+Flask==2.2.3
+torch==1.11.0
+git+https://github.com/AI4LIFE-GROUP/OpenXAI.git
+redis==4.5.1
+arrow==1.2.3
+flask-login==0.6.2
+gunicorn==20.1.0

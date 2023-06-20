@@ -1,0 +1,316 @@
+[
+    {
+        "id": "1",
+        "type": "multiple-choice",
+        "question": "I am confident and comfortable using the system's predictions.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true, 
+        "condition1": true,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "2",
+        "type": "multiple-choice",
+        "question": "I trust the system's predictions.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "3",
+        "type": "multiple-choice",
+        "question": "The system has integrity.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "4",
+        "type": "multiple-choice",
+        "question": "The system's predictions are sound based on the explanations provided.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": false, 
+        "condition3": true
+    },
+    {
+        "id": "5",
+        "type": "multiple-choice",
+        "question": "I am confident about my decisions.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "6",
+        "type": "multiple-choice",
+        "question": "The system's predictions influenced my decisions.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "7",
+        "type": "multiple-choice",
+        "question": "I understand the process by which the decision was made.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "8",
+        "type": "multiple-choice",
+        "question": "I understand how the model works to predict whether [outcome will be 0 or 1].",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "9",
+        "type": "multiple-choice",
+        "question": "I can predict how the model will behave.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "10",
+        "type": "multiple-choice",
+        "question": "The explanations are clear.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": false, 
+        "condition3": true
+    },
+    {
+        "id": "11",
+        "type": "multiple-choice",
+        "question": "The explanations are easy to understand.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": false, 
+        "condition3": true
+    },
+    {
+        "id": "12",
+        "type": "multiple-choice",
+        "question": "The explanations give me ideas about the data used in the system.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": false, 
+        "condition3": true
+    },
+    {
+        "id": "13",
+        "type": "multiple-choice",
+        "question": "The explanations are informative.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": false, 
+        "condition3": true
+    },
+    {
+        "id": "14",
+        "type": "multiple-choice",
+        "question": "Fair models do not systematically discriminate against individuals with a common ethnicity, religion, gender, etc., irrespective of whether the relevant group enjoys legal protections. Based on the above definition of fairness, this model is fair.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "15",
+        "type": "multiple-choice",
+        "question": "I could identify and correct unfair predictions made by the model.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "16",
+        "type": "multiple-choice",
+        "question": "I had all the required information to assess the fairness of the model.",
+        "options": [
+            "Strongly Disagree",
+            "Disagree",
+            "Neutral",
+            "Agree",
+            "Strongly Agree"
+        ],
+        "required": true,
+        "condition1": false,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "17",
+        "type": "multiple-choice",
+        "question": "What is your gender?",
+        "options": [
+            "Female",
+            "Male",
+            "Nonbinary",
+            "I prefer not to say"
+        ],
+        "required": true,
+        "condition1": true,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "18",
+        "type": "multiple-choice",
+        "question": "What is your age?",
+        "options": [
+            "18-25",
+            "26-40",
+            "41-60",
+            "61 and above",
+            "I prefer not to say"
+        ],
+        "required": true,
+        "condition1": true,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "19",
+        "type": "multiple-choice",
+        "question": "What is the highest degree or level of school you have completed? If currently enrolled, select the highest degree received.",
+        "options": [
+            "Some high school, no diploma, and below",
+            "High school graduate, diploma or the equivalent (for example: GED)",
+            "Some college credit, no degree",
+            "Trade/technical/vocational training",
+            "Bachelor's degree or above",
+            "I prefer not to say"
+        ],
+        "required": true,
+        "condition1": true,
+        "condition2": true, 
+        "condition3": true
+    },
+    {
+        "id": "0",
+        "type": "free-response",
+        "question": "Please give us any feedback you have.",
+        "options": null,
+        "required": false,
+        "condition1": true,
+        "condition2": true, 
+        "condition3": true
+    }
+]

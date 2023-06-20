@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: openhxai
+Version: 0.1.0
+Home-page: https://github.com/ChicagoHAI/openhxai
+Author: Allen Institute for Artificial Intelligence
+Author-email: contact@allenai.org
+License: Apache
+Classifier: Intended Audience :: Science/Research
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+License-File: LICENSE
+
+# openhxai
+
+## Dev Quickstart
+
+```bash
+conda create -n openhxai python=3.10
+git clone https://github.com/ChicagoHAI/openhxai.git
+cd openhxai
+pip install -e '.[dev]'
+```
+
+Before your commits: run `bash scripts/checks.sh` to format and unit-test!
