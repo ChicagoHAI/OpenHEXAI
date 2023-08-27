@@ -22,7 +22,7 @@ In this example, we will deploy a webapp for the Recidivism (RCDV) dataset, usin
 
 1. Launch a redis backend server. Run `bash scripts/launch-redis-server.sh`.
 2. In a separate terminal, run `bash scripts/quickstart.sh`. Notice that this script launches the webapp with the configuration file `config/quickstart.yaml`.
-3. The webapp should start in port 5000, and navigate to http://localhost:5000/?splitId=3&userId=quickstart to access to user study. Split 1, 2, 3 corresponds to these three conditions: no AI assistance, AI prediction only, and AI prediction + explanations.
+3. The webapp should start in port 5000. Navigate to http://localhost:5000/?splitId=3&userId=quickstart to access to user study. Split 1, 2, 3 corresponds to these three conditions: no AI assistance, AI prediction only, and AI prediction + explanations.
 4. Upon completing the study, run `python scripts/get-user-data-from-db.py` to retrieve user data collected during the study.
 A file `data/db-dump/user.jsonl` should be created.
 
@@ -77,7 +77,7 @@ Here are the list of supported datasets in our framework.
 | rcdv          | RCDV              |
 | student       | Student Admission |
 
-Adding a new dataset should be straightforward:
+Adding a new dataset is straightforward:
 `openhxai/datasets/tabular.py` contains the interface for a tabular dataset,
 and see `openhxai/datasets/synthetic.py` for the implementation of a simple, synthetic dataset.
 
