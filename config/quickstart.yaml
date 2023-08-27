@@ -15,7 +15,6 @@ app_config:
   survey_data: config/rcdv/rcdv-survey.json
 db_config:
   overwrite_db: true
-  password_file: config/secrets/db-password.txt
   redis_config:
     port: 6666
 dataset: rcdv

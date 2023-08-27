@@ -65,4 +65,9 @@ class OpenXAIExplainer(TabularExplainer):
         attr_raw = self.explainer.get_explanation(x, y)[0].tolist()
         attributions = {f: a for f, a in zip(self.dataset.features, attr_raw)}
 
-        return {"features": features, "attributions": attributions, "label": label, "prediction": prediction}
+        return {
+            "features": features,
+            "attributions": attributions,
+            "label": label,
+            "prediction": prediction,
+        }

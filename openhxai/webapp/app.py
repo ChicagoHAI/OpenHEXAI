@@ -11,7 +11,8 @@ from openhxai.webapp.views import page
 
 db = Database()
 login_manager = LoginManager()
-app = Flask(__name__)   
+app = Flask(__name__)
+
 
 @login_manager.user_loader
 def load_user(user_id: str):

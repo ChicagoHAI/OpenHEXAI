@@ -1,8 +1,8 @@
 import csv
-import time
 import random
-import pandas as pd
+import time
 
+import pandas as pd
 from flask import (
     Blueprint,
     current_app,
@@ -22,9 +22,9 @@ page = Blueprint("page", __name__)
 def get_url(file_name):
     found_row = None
     rows = []
-    
+
     # Read the CSV file
-    with open(file_name, 'r') as csv_file:
+    with open(file_name, "r") as csv_file:
         csv_reader = csv.reader(csv_file)
 
         # Iterate over each row
@@ -39,7 +39,7 @@ def get_url(file_name):
             rows.append(row)
 
     # Write the updated CSV file
-    with open(file_name, 'w', newline='') as csv_temp_file:
+    with open(file_name, "w", newline="") as csv_temp_file:
         csv_writer = csv.writer(csv_temp_file)
         csv_writer.writerows(rows)
 
@@ -54,7 +54,7 @@ def get_url(file_name):
 @page.route("/landing")
 def landing():
     db = current_app.extensions["db"]
-    user_id = ''
+    user_id = ""
     split_id_available = False
 
     # testing
@@ -62,8 +62,8 @@ def landing():
         user_id = request.args.get("userId")
         split_id = request.args.get("splitId")
         split_id_available = True
-        print('testing')
-    else: # prolific
+        print("testing")
+    else:  # prolific
         user_id = request.args.get("workerId")
         # get url and split id
         file_name = "/data/webapps/urls.csv"
@@ -71,30 +71,41 @@ def landing():
         split_id = url.split(",")[0][-1:]
         updated_url = url.replace("_", user_id)
         web_instance = url.split(".")[0][8:]
-        print('prolific')
+        print("prolific")
 
     user = User(user_id)
     if user_id or current_user.is_authenticated:
         if user_id:
             login_user(user, remember=True)
-            
+
             # prolific
             if split_id_available == False:
                 db.set(
                     f"user:{user_id}",
-                    {"user_id": user_id, "split_id": split_id, "url": updated_url, "creation_timestamp": time.time()},
+                    {
+                        "user_id": user_id,
+                        "split_id": split_id,
+                        "url": updated_url,
+                        "creation_timestamp": time.time(),
+                    },
                 )
-                print(f'user id: {user_id}, split id: {split_id}, web_instance: {web_instance}, url: {updated_url}')
+                print(
+                    f"user id: {user_id}, split id: {split_id}, web_instance: {web_instance}, url: {updated_url}"
+                )
                 return redirect(updated_url)
             else:
                 # testing
                 web_instance = "testing"
                 db.set(
                     f"user:{user_id}",
-                    {"user_id": user_id, "split_id": split_id, "web_instance": web_instance, "creation_timestamp": time.time()},
+                    {
+                        "user_id": user_id,
+                        "split_id": split_id,
+                        "web_instance": web_instance,
+                        "creation_timestamp": time.time(),
+                    },
                 )
-                print(f'user id: {user_id}, split id: {split_id}')
-                
+                print(f"user id: {user_id}, split id: {split_id}")
 
         return redirect(url_for("page.consent"))
 
@@ -199,17 +210,24 @@ def post_update():
                 if attention_state["labels"]["1"]["label"] == "False":
                     page = "page.disqualify"
             if split_id == "2":
-                if attention_state["labels"]["1"]["label"] == "False" or attention_state["labels"]["2"]["label"] == "False":
+                if (
+                    attention_state["labels"]["1"]["label"] == "False"
+                    or attention_state["labels"]["2"]["label"] == "False"
+                ):
                     page = "page.disqualify"
             if split_id == "3":
-                if attention_state["labels"]["1"]["label"] == "False" or attention_state["labels"]["3"]["label"] == "False":
+                if (
+                    attention_state["labels"]["1"]["label"] == "False"
+                    or attention_state["labels"]["3"]["label"] == "False"
+                ):
                     page = "page.disqualify"
             resp["redirect"] = url_for(page)
-            db.update(f"user:{user_id}", {"attention-state": attention_state, "attention-check": True})
+            db.update(
+                f"user:{user_id}", {"attention-state": attention_state, "attention-check": True}
+            )
 
         case "task-update":
             task_state = data["task-state"]
-            # TODO: fix this hardcoded behavior
             if task_state["task-progress"] >= 20:
                 resp["redirect"] = url_for("page.survey")
                 db.update(f"user:{user_id}", {"task-check": True})
@@ -217,9 +235,9 @@ def post_update():
 
         case "survey-update":
             survey_state = data["survey-state"]
-            db.update(f"user:{user_id}", {"survey-state": survey_state, "survey-check": True})            
+            db.update(f"user:{user_id}", {"survey-state": survey_state, "survey-check": True})
             resp["redirect"] = url_for("page.end")
-        
+
         case _:
             raise Exception("unknown event " + data["event"])
 
@@ -235,7 +253,7 @@ def get_task_data():
     task_data = db.get("task-data")
     user_task_instances = random.sample(task_data, 20)
     db.update(f"user:{user_id}", {"user-task-instances": user_task_instances})
-    
+
     return jsonify(user_task_instances)
 
 
@@ -244,7 +262,7 @@ def get_task_data():
 def get_codebook():
     file_path = current_app.config["codebook"]
     df = pd.read_csv(file_path)
-    data_dict = df.set_index('variable')['variable full name'].to_dict()
+    data_dict = df.set_index("variable")["variable full name"].to_dict()
     return jsonify(data_dict)
 
 
