@@ -12,7 +12,6 @@ def main():
     backend = redis.Redis(
         charset="utf-8",
         decode_responses=True,
-        password=open("config/secrets/db-password.txt").read().strip(),
         port=6666,
     )
 
