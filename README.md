@@ -83,6 +83,12 @@ and see `openhxai/datasets/synthetic.py` for the implementation of a simple, syn
 
 ## AI models and explanation methods
 
-AI models and explanation methods are supported by the [OpenXAI](https://github.com/AI4LIFE-GROUP/OpenXAI) framework.
-Two models are supported: `ann` (Feedforward neural net), and `lr` (Logistic regression).
+AI models and explanation methods are supported through the [OpenXAI](https://github.com/AI4LIFE-GROUP/OpenXAI) framework.
+
+Two types of AI models are supported: `ann` (Feedforward neural net), and `lr` (Logistic regression). Please see [here](https://github.com/AI4LIFE-GROUP/OpenXAI/blob/main/openxai/ML_Models/training.py) for the model training setup.
+
 For the list of available explanation methods, see [here](https://github.com/AI4LIFE-GROUP/OpenXAI/blob/main/openxai/explainers/__init__.py).
+
+## Evaluation Metrics and Power Analysis
+
+Once the user study is completed, we can use the script provided by `calculate_metrics.ipynb` to load the study results from the database and obtain the objective evaluation metrics. Then we can use the script `power_analysis.py` to do the power analysis.
